@@ -58,17 +58,19 @@ class ReactConnector extends ViewConnector {
       }
 
       query(options) {
-				const {untouchLoading} = options || {}
+        const {untouchLoading} = options || {}
 
         const p = new QueryParams()
         p.urlParams = this.props.urlParams || p.urlParams
         p.queryParams = this.props.queryParams || p.queryParams
 
-				const initState = {innerLoading: true}
-				if(!untouchLoading) {
-					initState.loading = true
-				}
-				this.setState(initState)
+        console.log('Q', p)
+
+        const initState = {innerLoading: true}
+        if (!untouchLoading) {
+          initState.loading = true
+        }
+        this.setState(initState)
 
         self.queryBank
           .exec(modelClass, queryName, p)
@@ -83,8 +85,8 @@ class ReactConnector extends ViewConnector {
       }
 
       componentWillReceiveProps() {
-				// TODO: Check if urlParams and queryParams changed
-				this.query({untouchLoading: true})
+        // TODO: Check if urlParams and queryParams changed
+        this.query({untouchLoading: true})
         this.forceUpdate()
       }
 
@@ -95,8 +97,9 @@ class ReactConnector extends ViewConnector {
 
       handleChange() {
         // and whenever the store state changes, it re-renders.
-				this.query({untouchLoading: true})
-        this.forceUpdate()
+        console.log('R', this.props)
+        this.query({untouchLoading: true})
+        // this.forceUpdate()
       }
     }
   }
@@ -117,7 +120,7 @@ class ReactConnector extends ViewConnector {
         )
       }
 
-      perform(bodyParams, urlParams, queryParams) {
+      perform(urlParams, bodyParams, queryParams) {
         const p = new QueryParams()
         p.urlParams = urlParams || this.props.urlParams || p.urlParams
         p.queryParams = queryParams || this.props.queryParams || p.queryParams
